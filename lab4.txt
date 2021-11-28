@@ -1,0 +1,61 @@
+#Task 1
+yum group install "Development Tools"
+yum install boost-devel boost ncurses-devel ncurses
+
+
+#Task 2
+mkdir ~/bastet
+cd ~/bastet
+wget https://github.com/fedos3d/itmo_linux/raw/master/bastet-0.43.tgz
+tar -xf bastet-0.43.tgz
+cd bastet-0.43
+make
+
+#Append to Makefile following lines:
+install:
+        cp $(PROGNAME) /usr/bin/
+        chmod o+x /usr/bin/$(PROGNAME)
+        
+make install
+
+#Task 3
+yum list installed > ~/task3.log
+
+#Task 4
+yum deplist gcc | grep "provider:" | awk '{print $2}' > ~/task4_1.log
+yum install yum-utils
+repoquery -q --installed --whatrequires libgcc > ~/task4_2.log
+
+#Task 5
+mkdir ~/localrepo
+wget https://github.com/fedos3d/itmo_linux/raw/master/checkinstall-1.6.2-3.el6.1.x86_64.rpm
+mv checkinstall-1.6.2-3.el6.1.x86_64.rpm ./localrepo
+yum install createrepo
+createrepo ~/localrepo/
+
+# let's create file localrepo.repo in /etc/yum.repos.d/
+[localrepo]
+name=localrepo
+enabled=1
+gpgcheck=0
+baseurl=file:///root/localrepo/
+
+#Task 6
+yum repolist > ~/task6.log
+
+#Task 7
+for I in /etc/yum.repos.d/*; do mv ${I} "${I}norepo"; done
+mv localrepo.reponorepo localrepo.repo
+yum install checkinstall
+
+#Task 8
+wget https://github.com/fedos3d/itmo_linux/raw/master/fortunes-ru_1.52-2_all.deb
+alien -r fortunes-ru_1.52-2_all.deb
+rpm -i --replacefiles fortunes-ru-1.52-3.noarch.rpm
+
+#Task 9
+wget https://www.nano-editor.org/dist/v5/nano-5.4.tar.xz
+tar -xf nano-5.4.tar.xz
+./nano-5.4/configure --prefix=/usr/ --program-prefix=new
+./nano-5.4/make
+./nano-5.4/make install
