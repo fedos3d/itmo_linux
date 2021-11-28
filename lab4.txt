@@ -49,7 +49,17 @@ yum install checkinstall
 
 #Task 8
 wget https://github.com/fedos3d/itmo_linux/raw/master/fortunes-ru_1.52-2_all.deb
-alien -r fortunes-ru_1.52-2_all.deb
+
+#install alien
+wget -c https://sourceforge.net/projects/alien-pkg-convert/files/release/alien_8.95.tar.xz
+tar -xf alien_8.95.tar.xz
+cd ./alien_8.95
+dnf install perl
+dnf install perl-ExtUtils-Install
+perl Makefile.PL; make; make install
+cd ~
+
+alien --to-rpm fortunes-ru_1.52-2_all.deb
 rpm -i --replacefiles fortunes-ru-1.52-3.noarch.rpm
 
 #Task 9
