@@ -15,7 +15,6 @@ make
 install:
         cp $(PROGNAME) /usr/bin/
         chmod o+x /usr/bin/$(PROGNAME)
-        
 make install
 
 #Task 3
