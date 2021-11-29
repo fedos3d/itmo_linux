@@ -14,7 +14,7 @@ make
 #Append to Makefile following lines:
 install:
         cp $(PROGNAME) /usr/bin/
-        chmod o+x /usr/bin/$(PROGNAME)
+        chmod +x /usr/bin/$(PROGNAME)
 make install
 
 #Task 3
